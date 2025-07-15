@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checklist Detalhado - Perito Médico Legal PF 2025</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Slab:wght@400;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        .title-font {
+            font-family: 'Roboto Slab', serif;
+        }
+        .sticky-header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+        .progress-bar {
+            transition: width 0.5s ease-in-out;
+        }
+        .topic-item > label {
+            cursor: pointer;
+        }
+        .topic-item input[type="checkbox"]:checked + label {
+            text-decoration: line-through;
+            color: #6b7280;
+        }
+        .topic-item {
+            transition: background-color 0.3s ease;
+        }
+        .topic-item:hover {
+            background-color: #f0f9ff;
+        }
+        .topic-item.completed {
+             background-color: #f0fff4;
+        }
+        @media print {
+            .no-print { display: none; }
+            body { background-color: white; }
+            .print-container { box-shadow: none; padding: 0; margin: 0; }
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <div class="print-container container mx-auto max-w-4xl bg-white shadow-lg rounded-lg my-8">
+        <header class="sticky-header bg-gradient-to-r from-blue-800 to-blue-600 p-6 rounded-t-lg no-print">
+            <div class="flex justify-between items-center text-white">
+                <div>
+                    <h1 class="text-3xl font-bold title-font">Checklist de Estudos</h1>
+                    <p class="text-lg text-blue-100">Perito Médico Legal - PF 2025</p>
+                </div>
+                <div class="text-right">
+                    <div id="countdown" class="text-5xl font-bold"></div>
+                    <p class="text-blue-200">dias restantes</p>
+                </div>
+            </div>
+            <div class="mt-4">
+                <h3 class="text-sm font-semibold text-white mb-1">Progresso Total:</h3>
+                <div class="w-full bg-blue-200 rounded-full h-4">
+                    <div id="geral-progress-bar" class="bg-yellow-400 h-4 rounded-full text-center text-black text-xs font-bold flex items-center justify-center" style="width: 0%;">
+                        <span id="geral-progress-text">0%</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="p-6 md:p-8">
+            <div id="syllabus-container" class="space-y-8">
+                </div>
+        </main>
+        
+        <footer class="text-center p-6 bg-gray-50 rounded-b-lg border-t border-gray-200">
+            <p class="text-sm text-gray-500">Bons estudos! A disciplina é a ponte entre metas e realizações.</p>
+        </footer>
+    </div>
+
+
+    <script>
+        const syllabusData = {
+            "Conhecimentos Básicos": {
+                "Língua Portuguesa": [
+                    "Compreensão e interpretação de textos de gêneros variados.",
+                    "Reconhecimento de tipos e gêneros textuais.",
+                    "Domínio da ortografia oficial.",
+                    "Domínio dos mecanismos de coesão textual (referenciação, substituição, repetição, conectores, tempos e modos verbais).",
+                    "Domínio da estrutura morfossintática do período (classes de palavras, coordenação, subordinação, pontuação, concordância, regência, crase, colocação pronominal).",
+                    "Reescrita de frases e parágrafos do texto (significação, substituição, reorganização, formalidade).",
+                    "Correspondência oficial (Manual de Redação da Presidência)."
+                ],
+                "Informática": [
+                    "Componentes de um computador (hardware e software).",
+                    "Noções de sistemas operacionais: Windows, Android e iOS.",
+                    "Navegadores, webmail e ferramentas do Microsoft Office 365 (Word, Excel, Outlook, etc.).",
+                    "Noções de segurança da informação (Malware, Phishing, Engenharia Social, Antivírus, MFA, etc.).",
+                    "Computação em nuvem.",
+                    "Noções de bancos de dados (relacionais, chaves).",
+                    "Noções de redes de computadores (LAN, WAN, TCP/IP, VPN).",
+                    "Noções de programação (Python, Low-Code/No-Code).",
+                    "Metadados de arquivos.",
+                    "Noções de aprendizado de máquina (Mineração de dados, Big data, IA Generativa)."
+                ],
+                "Direito Administrativo": [
+                    "Noções de organização administrativa (Centralização, descentralização, adm. direta/indireta).",
+                    "Ato administrativo (conceito, requisitos, atributos, classificação, espécies).",
+                    "Agentes públicos (Lei nº 8.112/90, disposições constitucionais).",
+                    "Poderes administrativos (Hierárquico, disciplinar, regulamentar, de polícia).",
+                    "Licitação (Princípios, contratação direta, modalidades, tipos, procedimento).",
+                    "Controle da Administração Pública (Administrativo, judicial, legislativo).",
+                    "Responsabilidade civil do Estado.",
+                    "Regime jurídico-administrativo (conceito, princípios)."
+                ],
+                "Direito Constitucional": [
+                    "Direitos e garantias fundamentais (individuais, coletivos, sociais, nacionalidade, políticos).",
+                    "Poder Executivo (forma e sistema de governo, chefia de Estado e de governo).",
+                    "Defesa do Estado e das instituições democráticas (segurança pública, organização).",
+                    "Ordem social (base, objetivos, seguridade, meio ambiente, família, índios)."
+                ],
+                "Direito Penal e Processual Penal": [
+                    "Princípios básicos do Direito Penal.",
+                    "Aplicação da lei penal (no tempo e no espaço, territorialidade).",
+                    "O fato típico e seus elementos (crime consumado/tentado, ilicitude, exclusão).",
+                    "Crimes contra a pessoa, patrimônio, fé pública e Administração Pública.",
+                    "Inquérito policial (conceito, características, instauração, conclusão).",
+                    "Prova (Exame de corpo de delito, perícias em geral, cadeia de custódia).",
+                    "Restrição de liberdade (prisão em flagrante).",
+                    "Função pericial do Estado e a perícia no processo (Lei nº 12.030/2009)."
+                ],
+                "Criminalística": [
+                    "Conceitos básicos (Ciências Forenses, Vestígio, Evidência, Indício, Princípio de Locard).",
+                    "Fotografia Pericial (legislação, princípios, técnicas).",
+                    "Locais de crime (isolamento, processamento, coleta de vestígios).",
+                    "Balística Forense (conceitos básicos).",
+                    "Princípios e elementos de um Laudo Pericial.",
+                    "Avanços e perspectivas em Ciências Forenses (bancos de dados)."
+                ],
+                "Direitos Humanos": [
+                    "Direitos humanos na Constituição Federal de 1988.",
+                    "Sistema internacional de proteção dos direitos humanos.",
+                    "Principais Convenções (Genocídio, Refugiados, Discriminação, Tortura, etc.).",
+                    "Regras mínimas da ONU para o tratamento de pessoas presas.",
+                    "Princípios Básicos sobre o Uso da Força e Armas de Fogo.",
+                    "Leis sobre uso de instrumentos de menor potencial ofensivo (Lei 13.060/14, Decreto 12.341/24)."
+                ],
+                "Raciocínio Lógico": [
+                    "Estruturas lógicas e Lógica de argumentação.",
+                    "Lógica sentencial (proposicional): Tabelas verdade, equivalências, Leis de Morgan.",
+                    "Lógica de primeira ordem.",
+                    "Princípios de contagem e probabilidade.",
+                    "Operações com conjuntos.",
+                    "Raciocínio lógico com problemas aritméticos, geométricos e matriciais."
+                ]
+            },
+            "Conhecimentos Específicos": {
+                "Perícia Médico-Legal": [
+                    "Importância da prova pericial, corpo de delito, cadeia de custódia.",
+                    "Atuação dos assistentes técnicos.",
+                    "Documentos médico-legais (Atestados, Prontuários, Relatórios, Pareceres).",
+                    "Laudos periciais (Estrutura, Quesitos, Modelos).",
+                    "Crime de Falsa Perícia.",
+                    "Interface da medicina-legal com outras áreas."
+                ],
+                "Traumatologia Forense": [
+                    "Lesão corporal (conceito, art. 129 CP, classificação, nexo causal, perícia em vítimas de tortura).",
+                    "Energias de ordem mecânica (ação contundente, armas brancas, PAF).",
+                    "Energias de ordem física não mecânica (baropatias, térmica, elétrica)."
+                ],
+                "Asfixiologia Forense": [
+                    "Conceito e classificação das asfixias.",
+                    "Asfixia por sufocação, constrição cervical e modificações no meio-ambiente."
+                ],
+                "Tanatologia Forense": [
+                    "Conceito de morte, transplantes, atestado de óbito.",
+                    "Inumação, exumação, cremação e embalsamamento.",
+                    "Causas jurídicas da morte e morte suspeita.",
+                    "Exame perinecroscópico e estimativa do tempo de morte (Cronotanatognose, Entomologia).",
+                    "Lesões intra vitam e post mortem.",
+                    "Necropsia médico-legal (técnicas, Protocolo de Minnesota)."
+                ],
+                "Sexologia Forense": [
+                    "Conceito e legislação correlata.",
+                    "Perícia nos crimes contra a liberdade sexual e pedofilia.",
+                    "Estudo médico-legal do aborto e infanticídio."
+                ],
+                "Toxicologia Forense": [
+                    "Conceitos fundamentais.",
+                    "Embriaguez e dependência (álcool e outras drogas) e legislação.",
+                    "Lesões por substâncias cáusticas e venenos."
+                ],
+                "Antropologia Forense": [
+                    "Princípios da identificação humana (métodos primários/secundários).",
+                    "Exumações e técnicas de escavação.",
+                    "Diagnóstico de espécie, sexo, idade e estatura em ossadas.",
+                    "Sinais de violência em ossadas.",
+                    "Identificação de vítimas de grandes desastres."
+                ],
+                "Psicopatologia Forense": [
+                    "Conceitos fundamentais.",
+                    "Estudo médico-legal da imputabilidade e responsabilidade penal.",
+                    "Estudo médico-legal da capacidade civil.",
+                    "Estudo médico-legal das dependências químicas."
+                ],
+                "Perícias Médicas em Medicina do Trabalho": [
+                    "Noções Gerais.",
+                    "Perícia oficial em saúde do servidor público federal.",
+                    "Perícia Médica Previdenciária do INSS."
+                ]
+            }
+        };
+
+        const syllabusContainer = document.getElementById('syllabus-container');
+        let topicCounter = 0;
+
+        for (const area in syllabusData) {
+            const areaTitle = document.createElement('h2');
+            areaTitle.className = 'text-3xl font-bold text-blue-700 pb-2 border-b-2 border-blue-200 mb-6';
+            areaTitle.textContent = area;
+            syllabusContainer.appendChild(areaTitle);
+
+            for (const disciplina in syllabusData[area]) {
+                const disciplinaCard = document.createElement('div');
+                disciplinaCard.className = 'bg-white p-6 rounded-lg shadow-md mb-6';
+                
+                const disciplinaTitle = document.createElement('h3');
+                disciplinaTitle.className = 'text-xl font-semibold text-gray-700 mb-4';
+                disciplinaTitle.textContent = disciplina;
+                disciplinaCard.appendChild(disciplinaTitle);
+
+                const topicList = document.createElement('ul');
+                topicList.className = 'space-y-3';
+                disciplinaCard.appendChild(topicList);
+
+                syllabusData[area][disciplina].forEach(topicText => {
+                    const topicId = `topic-${topicCounter++}`;
+                    
+                    const li = document.createElement('li');
+                    li.className = 'topic-item flex items-center border-l-4 border-gray-200 pl-4 py-2';
+                    
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.id = topicId;
+                    checkbox.className = 'h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500 mr-3 flex-shrink-0';
+                    
+                    const label = document.createElement('label');
+                    label.htmlFor = topicId;
+                    label.className = 'text-gray-600';
+                    label.textContent = topicText;
+
+                    li.appendChild(checkbox);
+                    li.appendChild(label);
+                    topicList.appendChild(li);
+                });
+
+                syllabusContainer.appendChild(disciplinaCard);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            const totalTopics = checkboxes.length;
+
+            function updateProgress() {
+                const checkedTopics = document.querySelectorAll('input[type="checkbox"]:checked').length;
+                const percentage = totalTopics > 0 ? ((checkedTopics / totalTopics) * 100).toFixed(0) : 0;
+                
+                const progressBar = document.getElementById('geral-progress-bar');
+                const progressText = document.getElementById('geral-progress-text');
+
+                progressBar.style.width = `${percentage}%`;
+                progressText.textContent = `${percentage}%`;
+
+                checkboxes.forEach(cb => {
+                    const li = cb.parentElement;
+                    if (cb.checked) {
+                        li.classList.add('completed');
+                    } else {
+                        li.classList.remove('completed');
+                    }
+                });
+            }
+
+            checkboxes.forEach(checkbox => {
+                const storedState = localStorage.getItem(checkbox.id);
+                if (storedState === 'true') {
+                    checkbox.checked = true;
+                }
+
+                checkbox.addEventListener('change', () => {
+                    localStorage.setItem(checkbox.id, checkbox.checked);
+                    updateProgress();
+                });
+            });
+
+            // Countdown Timer
+            const countdownElement = document.getElementById('countdown');
+            const examDate = new Date('2025-07-27T00:00:00-03:00');
+
+            function updateCountdown() {
+                const now = new Date();
+                const diffTime = examDate - now;
+                const diffDays = Math.max(0, Math.ceil(diffTime / (1000 * 60 * 60 * 24)));
+                countdownElement.textContent = diffDays;
+            }
+
+            updateCountdown();
+            setInterval(updateCountdown, 1000 * 60 * 60); // Update every hour
+
+            updateProgress();
+        });
+    </script>
+</body>
+</html>
